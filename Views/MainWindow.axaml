@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RocketApp.ViewModels"
+        xmlns:views="clr-namespace:RocketApp.Views;assembly=RocketApp"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="RocketApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Rocket Simulation">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,Auto" ColumnDefinitions="*,300">
+        <!-- Левая часть - визуализация -->
+        <Border Grid.Row="0" Grid.Column="0" Background="#FF0F0F23">
+            <Canvas x:Name="SimulationCanvas">
+                <ItemsControl ItemsSource="{Binding Rockets}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <views:RocketView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Canvas>
+        </Border>
+        
+        <!-- Правая часть - терминал -->
+        <Border Grid.Row="0" Grid.Column="1" Background="Black" Padding="5">
+            <ScrollViewer>
+                <TextBox x:Name="Terminal" 
+                         Text="{Binding ConsoleOutput}" 
+                         IsReadOnly="True"
+                         Foreground="White"
+                         Background="Black"
+                         TextWrapping="Wrap"
+                         FontFamily="Consolas"/>
+            </ScrollViewer>
+        </Border>
+        
+        <!-- Панель управления с балансом -->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Добавить ракету" Command="{Binding AddRocketCommand}" Margin="5" Padding="10"/>
+            <Button Content="Запустить все" Command="{Binding LaunchAllCommand}" Margin="5" Padding="10"/>
+            <Button Content="Отменить" Command="{Binding CancelLaunchCommand}" Margin="5" Padding="10"/>
+            
+            <!-- Блок с информацией о страховке -->
+            <Border Background="#333333" CornerRadius="5" Padding="10" Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding InsuranceStatus}" Foreground="White" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding InsuranceBalance, StringFormat='Баланс: {0:C}'}" 
+                               Foreground="White" Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:RocketApp.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="200" d:DesignHeight="100"
+             x:Class="RocketApp.Views.RocketView"
+             x:DataType="vm:RocketViewModel">
+    <Canvas>
+        <!-- Простая ракета в виде треугольника -->
+        <Path Data="M20,0 L40,40 L0,40 Z" Fill="White" Stroke="Gray"/>
+        
+        <!-- Огонь выхлопа -->
+        <Path Data="M10,40 L20,60 L30,40 Z" Fill="Orange"/>
+        
+        <!-- Статус -->
+        <TextBlock Text="{Binding Status}" Canvas.Left="-20" Canvas.Top="45" 
+                   Foreground="White" FontSize="10"/>
+    </Canvas>
+</UserControl>
